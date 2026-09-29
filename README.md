@@ -36,7 +36,6 @@
 - [Performance](#performance)
 - [Key Learnings](#key-learnings)
 - [Roadmap](#roadmap)
-- [License](#license)
 
 ---
 
@@ -131,10 +130,6 @@ Both paths of the `Choice` state were tested explicitly:
 - [ ] Add CloudWatch alarms/dashboards for execution duration and failure rate
 - [ ] Package infrastructure as code (Terraform / AWS SAM / CDK) for repeatable deploys
 - [ ] Add unit tests for the Lambda's Parquet-processing logic
-
-## License
-
-This project is licensed under the MIT License — see the `LICENSE` file for details.
 
 ---
 
