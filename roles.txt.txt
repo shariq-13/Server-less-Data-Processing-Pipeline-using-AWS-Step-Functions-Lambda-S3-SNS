@@ -1,0 +1,22 @@
+------------lambda Functions role------------
+AmazonS3FullAccess
+AWSLambda_FullAccess
+AWSLambdaBasicExecutionRole
+
+------------Step Functions role------------
+AWSLambdaRole — AWS managed policy
+StepFunctionsLambdaSNSAccess — your custom policy
+{
+  "Effect": "Allow",
+  "Action": [
+    "lambda:InvokeFunction",
+    "sns:Publish"
+  ],
+  "Resource": [
+    "YOUR_LAMBDA_ARN",
+    "YOUR_SNS_TOPIC_ARN"
+  ]
+}
+
+
+

@@ -1,0 +1,66 @@
+Complete Step Functions JSON
+
+In Step Functions → Workflow Studio, switch to Code view.
+
+
+⚠️ Change these two values
+
+You must replace:
+
+arn:aws:lambda:ap-south-1:123456789012:function:amazon-review-processing
+
+with your actual Lambda ARN.
+
+And replace:
+
+arn:aws:sns:ap-south-1:123456789012:amazon-review-failure
+
+with your actual SNS Topic ARN.
+
+
+
+{
+  "Comment": "Amazon Review Processing Workflow",
+  "StartAt": "Lambda Invoke",
+  "States": {
+    "Lambda Invoke": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "YOUR-LAMBDA-ARN",
+        "Payload": {}
+      },
+      "OutputPath": "$.Payload",
+      "Next": "Choice"
+    },
+    "Choice": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.status",
+          "StringEquals": "SUCCESS",
+          "Next": "Success"
+        }
+      ],
+      "Default": "SNS Publish"
+    },
+    "Success": {
+      "Type": "Succeed"
+    },
+    "SNS Publish": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "YOUR-SNS-TOPIC-ARN",
+        "Subject": "Amazon Review Processing Failed",
+        "Message.$": "$.message"
+      },
+      "Next": "Fail"
+    },
+    "Fail": {
+      "Type": "Fail",
+      "Error": "ReviewProcessingFailed",
+      "Cause": "Amazon review processing failed."
+    }
+  }
+}
